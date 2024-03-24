@@ -1,8 +1,8 @@
 from enum import auto
 
-from django.db import models
+from django.db.models import TextChoices
 
 
-class GoalHolderType(models.TextChoices):
+class GoalHolderType(TextChoices):
     saving_account = auto()
     deposit = auto()

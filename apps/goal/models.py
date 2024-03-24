@@ -1,24 +1,25 @@
 from datetime import date
 
-from django.db import models
+from django.db.models import CharField, DateField, FloatField, Model, TextField
 
-from . import enums, managers
+from .enums import GoalHolderType
+from .managers import GoalManager
 
 
-class Goal(models.Model):
-    name = models.CharField(max_length=255, verbose_name='Name')
-    description = models.TextField(verbose_name='Description')
-    holder_type = models.CharField(
-        choices=enums.GoalHolderType.choices,
-        default=enums.GoalHolderType.saving_account,
+class Goal(Model):
+    name = CharField(max_length=255, verbose_name='Name')
+    description = TextField(verbose_name='Description')
+    holder_type = CharField(
+        choices=GoalHolderType.choices,
+        default=GoalHolderType.saving_account,
         max_length=32,
         verbose_name='Holder type',
     )
-    start_date = models.DateField(default=date.today, verbose_name='Start date')
-    finish_date = models.DateField(null=True, verbose_name='Finish date')
-    value = models.FloatField(verbose_name='Amount of money')
+    start_date = DateField(default=date.today, verbose_name='Start date')
+    finish_date = DateField(null=True, verbose_name='Finish date')
+    value = FloatField(verbose_name='Amount of money')
 
-    objects = managers.GoalManager()
+    objects = GoalManager()
 
     class Meta:
         verbose_name = 'Goal'

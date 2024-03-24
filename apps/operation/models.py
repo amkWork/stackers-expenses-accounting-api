@@ -1,11 +1,11 @@
-from django.db import models
+from django.db.models import DateTimeField, FloatField, Model, TextField
 
 
-class Operation(models.Model):
-    name = models.TextField(verbose_name='Name')
-    description = models.TextField(null=True, verbose_name='Description')
-    value = models.FloatField(verbose_name='Amount of money')
-    created_at = models.DateTimeField(verbose_name='Perform date & time')
+class Operation(Model):
+    name = TextField(verbose_name='Name')
+    description = TextField(null=True, verbose_name='Description')
+    value = FloatField(verbose_name='Amount of money')
+    created_at = DateTimeField(verbose_name='Perform date & time')
 
     class Meta:
         verbose_name = 'Operation'
