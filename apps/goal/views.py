@@ -1,11 +1,9 @@
-from django.http import HttpRequest, JsonResponse
+from rest_framework.generics import ListAPIView
 
 from .models import Goal
+from .serializers import GoalSerializer
 
 
-def get_all_goals(_: HttpRequest) -> JsonResponse:
-    goals = Goal.objects.all()
-
-    return JsonResponse({
-        'goals': list(goals.values()),
-    })
+class GoalList(ListAPIView):
+    queryset = Goal.objects.all()
+    serializer_class = GoalSerializer

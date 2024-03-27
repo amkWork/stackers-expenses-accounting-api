@@ -1,33 +1,15 @@
-from http import HTTPStatus
+from django_filters.rest_framework.backends import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
+from rest_framework.generics import ListAPIView
 
-from django.db.models import F
-from django.http import HttpRequest, JsonResponse
-
+from .filters import OperationFilterSet
 from .models import Operation
+from .serializers import OperationSerializer
 
 
-def get_all_operations(request: HttpRequest) -> JsonResponse:
-    offset: str = request.GET.get('offset', '0')
-    limit: str = request.GET.get('limit', '20')
-
-    if not offset.isdigit() or not limit.isdigit():
-        return JsonResponse(
-            {'message': 'Pagination parameters are not valid numbers.'},
-            status=HTTPStatus.BAD_REQUEST,
-        )
-
-    offset = int(offset)
-    limit = int(limit)
-
-    operations = Operation.objects.order_by('-created_at')
-
-    if category_id := request.GET.get('category-id'):
-        operations = operations.filter(category=category_id)
-
-    operations = operations[offset:offset + limit]
-
-    operations = operations.annotate(category_name=F('category__name'))
-
-    return JsonResponse({
-        'operations': list(operations.values()),
-    })
+class OperationList(ListAPIView):
+    queryset = Operation.objects.all()
+    serializer_class = OperationSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter,)
+    filterset_class = OperationFilterSet
+    search_fields = ('name',)

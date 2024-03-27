@@ -1,8 +1,8 @@
 from django.urls import path
 
-from .views import get_all_operations
+from .views import OperationList
 
 
 urlpatterns = [
-    path('all/', view=get_all_operations),
+    path('all/', view=OperationList.as_view()),
 ]
