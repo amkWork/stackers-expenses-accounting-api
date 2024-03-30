@@ -4,5 +4,5 @@ from .views import GoalList
 
 
 urlpatterns = [
-    path('all/', view=GoalList.as_view()),
+    path('all/', view=GoalList.as_view(), name='goal-list'),
 ]

@@ -4,5 +4,5 @@ from .views import OperationList
 
 
 urlpatterns = [
-    path('all/', view=OperationList.as_view()),
+    path('all/', view=OperationList.as_view(), name='operation-list'),
 ]
