@@ -1,12 +1,15 @@
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from django.contrib.auth.models import User
 from django.core.mail import send_mail
 
 
+if TYPE_CHECKING:
+    from django.contrib.auth.models import User
+
+
 def send_sign_up_notification(
-    sender: type[User],
-    instance: User,
+    sender: type['User'],
+    instance: 'User',
     created: bool,
     **kwargs: Any,
 ) -> None:
