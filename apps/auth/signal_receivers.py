@@ -4,12 +4,12 @@ from django.core.mail import send_mail
 
 
 if TYPE_CHECKING:
-    from django.contrib.auth.models import User
+    from django.contrib.auth.models import AbstractUser
 
 
 def send_sign_up_notification(
-    sender: type['User'],
-    instance: 'User',
+    sender: type['AbstractUser'],
+    instance: 'AbstractUser',
     created: bool,
     **kwargs: Any,
 ) -> None:
